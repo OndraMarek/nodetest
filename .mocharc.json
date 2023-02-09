@@ -1,0 +1,9 @@
+{
+  "inline-diffs": true,
+  "exit": true,
+  "extension": ["ts"],
+  "opts": false,
+  "ui": "bdd",
+  "watch-files": ["src/**/*.ts"],
+  "spec": ["src/**/*.spec.ts"]
+}

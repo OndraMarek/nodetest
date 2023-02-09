@@ -1,0 +1,45 @@
+html {
+    background-color: rgb(44, 126, 233);
+}
+h2 {
+    padding-top: 10px;
+    color: white;
+}
+.bgClass {
+    background-color: rgb(44, 126, 233);
+}
+
+.container {
+    background-color: rgb(18, 94, 165);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    text-align: left;
+    font-weight: 600;
+    border: 2px solid #025f70;
+}
+
+p {
+    margin-left: 10px;
+}
+
+.deleteButton {
+    position: absolute;
+    right: 10px;
+    top: 3px;
+}
+
+ul li {
+    position: relative;
+    padding: 10px 0px 0px 0px;
+    background: #eee;
+    font-size: 12x;
+}
+ul li:hover {
+    background: #ddd;
+}
