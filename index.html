@@ -39,39 +39,9 @@
             crossorigin="anonymous"
         ></script>
         <script>
-            $(document).ready(function () {
-                function getTodos() {
-                    $.ajax({
-                        url: '/todos',
-                        type: 'get',
-                        dataType: 'json',
-                        success: response => {
-                            $.each(response.todos, (index, todoItem) => {
-                                addTask(todoItem.todo);
-                            });
-                        },
-                    });
-                }
-                getTodos();
-                $('#frmMain').on('submit', e => {
-                    e.preventDefault();
-
-                    const form = $('#frmMain');
-                    const formData = form.serialize();
-                    const actionUrl = e.currentTarget.action;
-
-                    $.ajax({
-                        url: actionUrl,
-                        type: 'post',
-                        data: formData,
-                        dataType: 'json',
-                        success: response => {
-                            $('#todoInput').val('');
-                        },
-                    });
-
-                    return false;
-                });
+            $(document).ready(() => {
+                renderTasks();
+                addNewTaskOnSubmit();
             });
         </script>
     </body>
