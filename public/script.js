@@ -102,3 +102,7 @@ function resetTodoInput() {
 function addNewTaskOnSubmit() {
     $('#frmMain').on('submit', addNewTodo);
 }
+
+// function deleteTaskOnClick() {
+//     $('.deleteButton').click(() => {});
+// }

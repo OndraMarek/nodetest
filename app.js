@@ -2,7 +2,12 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const port = process.env.PORT || 8080;
-const todos = [{todo: 'text'}, {todo: 'test'}];
+const crypto = require('crypto');
+const todos = [{todo: 'text', id: generateUuid()}];
+
+function generateUuid() {
+    return crypto.randomUUID();
+}
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -20,7 +25,7 @@ app.get('/todos', (req, res) => {
 app.post('/todos', (req, res) => {
     const todo = req.body.todo.trim();
     if (todo) {
-        todos.push({todo});
+        todos.push({todo, id: generateUuid()});
     }
     res.json(req.body);
 });
