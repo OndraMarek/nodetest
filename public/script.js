@@ -3,42 +3,76 @@ todoAdd.addEventListener('click', onClick);
 
 function onClick() {
     const inputValue = $('#todoInput').val();
+
     if (inputValue) {
-        renderTask(0, {todo: inputValue});
+        renderTodo(0, {todo: inputValue});
     }
 }
 
-function renderTask(index, todoItem) {
-    let li = document.createElement('li');
-    let p = document.createElement('p');
-
-    let textValue = document.createTextNode(todoItem.todo);
-    li.appendChild(p);
-    p.appendChild(textValue);
-    document.getElementById('todoUl').appendChild(li);
-
-    let delButton = document.createElement('a');
-    let delText = document.createTextNode('Delete');
-    delButton.className = 'deleteButton btn btn-danger';
-    delButton.appendChild(delText);
-    li.appendChild(delButton);
+function renderTodo(index, todoItem) {
+    const todoText = getTodoText(todoItem);
+    const line = addLineOnTodoList(todoText);
+    addDeleteButtonToLine(line);
 }
 
-let todoDelete = document.getElementsByClassName('deleteButton');
+function addLineOnTodoList(todoText) {
+    const line = createNewLine(todoText);
+    getTodoList().appendChild(line);
+
+    return line;
+}
+
+function getTodoList() {
+    return document.getElementById('todoUl');
+}
+
+function createNewLine(todoText) {
+    const todo = createTodo(todoText);
+    const line = document.createElement('li');
+    line.appendChild(todo);
+
+    return line;
+}
+
+function createTodo(todoText) {
+    const p = document.createElement('p');
+    p.appendChild(todoText);
+
+    return p;
+}
+
+function getTodoText(todoItem) {
+    return document.createTextNode(todoItem.todo);
+}
+
+function addDeleteButtonToLine(line) {
+    line.appendChild(renderDeleteButton());
+}
+
+function renderDeleteButton() {
+    let deleteButton = document.createElement('a');
+    let deleteText = document.createTextNode('Delete');
+    deleteButton.className = 'deleteButton btn btn-danger';
+    deleteButton.appendChild(deleteText);
+
+    return deleteButton;
+}
+
+/*let todoDelete = document.getElementsByClassName('deleteButton');
 for (let i = 0; i < todoDelete.length; i++) {
     todoDelete[i].addEventListener('click', deleteTask);
     function deleteTask() {
         this.parentElement.remove();
     }
-}
+}*/
 
-function renderTasks() {
+function renderTodos() {
     $.ajax({
         url: '/todos',
         type: 'get',
         dataType: 'json',
         success: response => {
-            $.each(response.todos, renderTask);
+            $.each(response.todos, renderTodo);
         },
     });
 }
