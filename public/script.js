@@ -1,18 +1,9 @@
 const todoAdd = document.getElementById('addButton');
-todoAdd.addEventListener('click', onClick);
-
-function onClick() {
-    const inputValue = $('#todoInput').val();
-
-    if (inputValue) {
-        renderTodo(0, {todo: inputValue});
-    }
-}
 
 function renderTodo(index, todoItem) {
     const todoText = getTodoText(todoItem);
     const line = addLineOnTodoList(todoText);
-    addDeleteButtonToLine(line);
+    addDeleteButtonToLine(line, todoItem.id);
 }
 
 function addLineOnTodoList(todoText) {
@@ -45,15 +36,19 @@ function getTodoText(todoItem) {
     return document.createTextNode(todoItem.todo);
 }
 
-function addDeleteButtonToLine(line) {
-    line.appendChild(renderDeleteButton());
+function addDeleteButtonToLine(line, todoId) {
+    line.appendChild(renderDeleteButton(todoId));
 }
 
-function renderDeleteButton() {
+function renderDeleteButton(todoId) {
     let deleteButton = document.createElement('a');
     let deleteText = document.createTextNode('Delete');
     deleteButton.className = 'deleteButton btn btn-danger';
     deleteButton.appendChild(deleteText);
+    $(deleteButton).click(() => {
+        //deleteTodo(todoId);
+        console.log(todoId);
+    });
 
     return deleteButton;
 }
@@ -79,15 +74,17 @@ function renderTodos() {
 
 function addNewTodo(event) {
     event.preventDefault();
-
-    const form = $('#frmMain');
-    const formData = form.serialize();
     const actionUrl = event.currentTarget.action;
-
+    const todo = $('#todoInput').val();
+    const id = crypto.randomUUID();
+    const todoItem = {todo, id};
+    if (todo) {
+        renderTodo(0, todoItem);
+    }
     $.ajax({
         url: actionUrl,
         type: 'post',
-        data: formData,
+        data: todoItem,
         dataType: 'json',
         success: resetTodoInput,
     });
@@ -102,7 +99,3 @@ function resetTodoInput() {
 function addNewTaskOnSubmit() {
     $('#frmMain').on('submit', addNewTodo);
 }
-
-// function deleteTaskOnClick() {
-//     $('.deleteButton').click(() => {});
-// }
