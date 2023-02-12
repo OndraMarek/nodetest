@@ -1,4 +1,5 @@
 const express = require('express');
+const {remove} = require('lodash');
 const app = express();
 const path = require('path');
 const port = process.env.PORT || 8080;
@@ -24,6 +25,13 @@ app.post('/todos', (req, res) => {
         todos.push({todo, id});
     }
     res.json(req.body);
+});
+
+app.delete('/todos/:id', (req, res) => {
+    const id = req.params.id;
+    remove(todos, a => {
+        return a.id == id;
+    });
 });
 
 app.listen(port, () => console.info(`App listening on port ${port}`));

@@ -46,20 +46,25 @@ function renderDeleteButton(todoId) {
     deleteButton.className = 'deleteButton btn btn-danger';
     deleteButton.appendChild(deleteText);
     $(deleteButton).click(() => {
-        //deleteTodo(todoId);
-        console.log(todoId);
+        deleteTodo(todoId);
+        deleteTodoFromList(deleteButton);
     });
 
     return deleteButton;
 }
 
-/*let todoDelete = document.getElementsByClassName('deleteButton');
-for (let i = 0; i < todoDelete.length; i++) {
-    todoDelete[i].addEventListener('click', deleteTask);
-    function deleteTask() {
-        this.parentElement.remove();
-    }
-}*/
+function deleteTodo(todoId) {
+    $.ajax({
+        url: '/todos/' + todoId,
+        type: 'delete',
+        dataType: 'html',
+        success: response => {},
+    });
+}
+
+function deleteTodoFromList(deleteButton) {
+    deleteButton.parentElement.remove();
+}
 
 function renderTodos() {
     $.ajax({
