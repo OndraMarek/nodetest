@@ -9,6 +9,8 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT || 8080;
 const todos = [];
+let test = 0;
+console.log(test);
 const todoValidation = {
     body: Joi.object({
         todo: Joi.string().required(),

@@ -1,5 +1,3 @@
-const todoAdd = document.getElementById('addButton');
-
 function renderTodo(index, todoItem) {
     const line = addLineOnTodoList(todoItem);
     addDeleteButtonToLine(line, todoItem.id);
@@ -77,15 +75,12 @@ function renderTodos() {
 }
 
 function addNewTodo(event) {
-    // if ($('#frmMain').checkValidity()) {
-    //     event.preventDefault();
-    //     event.stopPropagation();
-    // }
     event.preventDefault();
     const actionUrl = event.currentTarget.action;
-    const todo = $('#todoInput').val();
+    const todo = $('#todo').val();
     const id = crypto.randomUUID();
     const todoItem = {todo, id};
+    $('#todo').removeClass('is-invalid');
     $.ajax({
         url: actionUrl,
         type: 'post',
@@ -97,7 +92,13 @@ function addNewTodo(event) {
         },
         statusCode: {
             400: function (xhr) {
-                if (window.console) console.log(xhr.responseText);
+                const response = JSON.parse(xhr.responseText);
+                $.each(response.details.body, (index, error) => {
+                    const inputId = error.context.key;
+                    if (inputId) {
+                        $('#' + inputId).addClass('is-invalid');
+                    }
+                });
             },
         },
     });
@@ -106,7 +107,7 @@ function addNewTodo(event) {
 }
 
 function resetTodoInput() {
-    $('#todoInput').val('');
+    $('#todo').val('');
 }
 
 function addNewTaskOnSubmit() {

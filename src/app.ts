@@ -16,6 +16,8 @@ interface Todo {
     id: string;
 }
 
+let test = 0;
+console.log(test);
 const todoValidation = {
     body: Joi.object({
         todo: Joi.string().required(),
@@ -24,7 +26,6 @@ const todoValidation = {
 };
 
 app.use(bodyParser.json());
-// app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use('/', express.static(path.join(__dirname, '/public')));

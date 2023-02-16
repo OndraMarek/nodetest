@@ -13,6 +13,10 @@ h2 {
     background-color: rgb(18, 94, 165);
 }
 
+.invalid-feedback {
+    font-weight: bolder;
+    text-align: left;
+}
 ul {
     list-style-type: none;
     padding: 0;
